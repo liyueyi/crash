@@ -1018,14 +1018,14 @@ search_directory_tree(char *directory, char *file, int follow_links)
 	regex_t regex;
 	int regex_used, done;
 
-	if (!file_exists("/usr/bin/find", NULL) || 
+	if (!file_exists("/system/bin/find", NULL) ||
 	    !file_exists("/bin/echo", NULL) ||
 	    !is_directory(directory) ||
 	    (*file == '(')) 
 		return NULL;
 
 	sprintf(command, 
-            "/usr/bin/find %s %s -name %s -print; /bin/echo search done",
+            "/system/bin/find %s %s -name %s -print; /bin/echo search done",
 		follow_links ? "-L" : "", directory, file);
 
         if ((pipe = popen(command, "r")) == NULL) {
@@ -4304,7 +4304,7 @@ match_file_string(char *filename, char *string, char *buffer)
 	FILE *pipe;
 
 
-	sprintf(command, "/usr/bin/strings %s", filename);
+	sprintf(command, "/system/bin/strings %s", filename);
         if ((pipe = popen(command, "r")) == NULL) {
                 error(INFO, "%s: %s\n", filename, strerror(errno));
                 return FALSE;

@@ -375,7 +375,7 @@ flattened_format_get_osrelease(char *file)
 	char buf[BUFSIZE], *p1, *p2;
 
 	c = strlen("OSRELEASE=");
-	sprintf(buf, "/usr/bin/strings -n %d %s", c, file);
+	sprintf(buf, "/system/bin/strings -n %d %s", c, file);
 			
 	if ((pipe = popen(buf, "r")) == NULL)
 		return;

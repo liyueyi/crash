@@ -466,7 +466,7 @@ handle_connection(int sock)
                         file = strtok(NULL, " ");    /* filename */
 
 			sprintf(readbuf, 
-			    "/usr/bin/strings %s | grep 'Linux version'", 
+			    "/system/bin/strings %s | grep 'Linux version'",
 				file);
 
         		if ((pipe = popen(readbuf, "r"))) {
@@ -496,7 +496,7 @@ handle_connection(int sock)
 			errno = 0;
 			reqsize = bufsize - DATA_HDRSIZE;
 
-                        sprintf(readbuf, "/usr/bin/gzip -c %s", file);
+                        sprintf(readbuf, "/system/bin/gzip -c %s", file);
 
                         if ((pipe = popen(readbuf, "r")) == NULL) {
 				sprintf(readbuf, "%s%07ld", FAILMSG, 
@@ -1085,7 +1085,7 @@ no_debugging_symbols_found(char *file)
 	FILE *pipe;
 	char buf[BUFSIZE];
 
-	sprintf(buf, "echo 'q' | /usr/bin/gdb %s", file);
+	sprintf(buf, "echo 'q' | /system/bin/gdb %s", file);
 	if ((pipe = popen(buf, "r")) == NULL)
 		return "NO_GDB";
 
@@ -1188,9 +1188,9 @@ daemon_is_elf_file(char *s)
         if (!STREQ(magic, ELFMAG))
                 return FALSE;
 
-	sprintf(buf, "/usr/bin/file -L %s", s);
+	sprintf(buf, "/system/bin/file -L %s", s);
         if ((pipe = popen(buf, "r")) == NULL) {
-        	console("/usr/bin/strings popen failed\n");
+                console("/system/bin/strings popen failed\n");
                 return TRUE;
         } 
 
@@ -1316,9 +1316,9 @@ daemon_find_booted_kernel(char *namelist)
                             !daemon_is_elf_file(kernel))
 				continue;
 
-			sprintf(command, "/usr/bin/strings %s", kernel);
+			sprintf(command, "/system/bin/strings %s", kernel);
 	        	if ((pipe = popen(command, "r")) == NULL) {
-				console("/usr/bin/strings popen failed\n");
+				console("/system/bin/strings popen failed\n");
 				continue;
 			}
 
@@ -1723,13 +1723,13 @@ daemon_search_directory_tree(char *directory, char *file, char *retbuf)
 	FILE *pipe;
 	int found;
 
-	if (!daemon_file_exists("/usr/bin/find", NULL) || 
+	if (!daemon_file_exists("/system/bin/find", NULL) ||
 	    !daemon_file_exists("/bin/echo", NULL) ||
 	    !daemon_is_directory(directory)) 
 		return FALSE;
 
 	sprintf(command, 
-            "/usr/bin/find %s -name %s -print; /bin/echo search done",
+            "/system/bin/find %s -name %s -print; /bin/echo search done",
 		directory, file);
 
         if ((pipe = popen(command, "r")) == NULL) 
@@ -2783,7 +2783,7 @@ identical_namelist(char *file, struct remote_file *rfp)
 
         vers = recvbuf;
 
-        sprintf(readbuf, "/usr/bin/strings %s | grep 'Linux version'", 
+        sprintf(readbuf, "/system/bin/strings %s | grep 'Linux version'",
 		file);
         if ((pipe = popen(readbuf, "r"))) {
         	BZERO(readbuf, BUFSIZE);
@@ -3368,7 +3368,7 @@ copy_remote_gzip_file(struct remote_file *rfp, char *file, char *ttystr)
 	struct stat sbuf;
         ulong pct, ret, req, tot, total;
 
-	sprintf(readbuf, "/usr/bin/gunzip > %s", pc->namelist);
+	sprintf(readbuf, "/system/bin/gunzip > %s", pc->namelist);
         if ((pipe = popen(readbuf, "w")) == NULL)
 		error(FATAL, "cannot open pipe to create %s\n", pc->namelist);
 

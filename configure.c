@@ -159,7 +159,7 @@ void add_extra_lib(char *);
 #define GDB_TARGET_ARM_ON_X86_64  "GDB_CONF_FLAGS=--target=arm-elf-linux CFLAGS=-m32"
 #define GDB_TARGET_X86_ON_X86_64  "GDB_CONF_FLAGS=--target=i686-pc-linux-gnu CFLAGS=-m32"
 #define GDB_TARGET_PPC_ON_PPC64   "GDB_CONF_FLAGS=--target=ppc-elf-linux CFLAGS=-m32"
-#define GDB_TARGET_ARM64_ON_X86_64  "GDB_CONF_FLAGS=--target=aarch64-elf-linux"   /* TBD */
+#define GDB_TARGET_ARM64_ON_X86_64  "GDB_CONF_FLAGS=--target=aarch64-elf-linux --host=aarch64-linux-android CFLAGS=--sysroot=/code/android-ndk-r16b/tmp/toolchain/sysroot"   /* TBD */
 #define GDB_TARGET_PPC64_ON_X86_64  "GDB_CONF_FLAGS=--target=powerpc64le-unknown-linux-gnu"
 #define GDB_TARGET_MIPS_ON_X86     "GDB_CONF_FLAGS=--target=mipsel-elf-linux"
 #define GDB_TARGET_MIPS_ON_X86_64  "GDB_CONF_FLAGS=--target=mipsel-elf-linux CFLAGS=-m32"
@@ -1413,9 +1413,9 @@ make_spec_file(struct supported_gdb_version *sp)
 	printf("\n");
 	printf("%%files\n");
 	printf("%%defattr(-,root,root)\n");
-	printf("/usr/bin/crash\n");
+	printf("/system/bin/crash\n");
 	printf("%%{_mandir}/man8/crash.8*\n");
-     /*	printf("/usr/bin/crashd\n"); */
+     /*	printf("/system/bin/crashd\n"); */
 	printf("%%doc README\n");
 	printf("\n");
 	printf("%%files devel\n");

@@ -1293,7 +1293,7 @@ verify_namelist()
 	target_smp = strstr(kt->utsname.version, " SMP ") ? TRUE : FALSE;
 	namelist_smp = FALSE;
 
-        sprintf(command, "/usr/bin/strings %s", namelist);
+        sprintf(command, "/system/bin/strings %s", namelist);
         if ((pipe = popen(command, "r")) == NULL) {
                 error(INFO, "%s: %s\n", namelist, strerror(errno));
                 return;
@@ -1415,7 +1415,7 @@ source_tree_init(void)
 		return;
 	}
 
-	sprintf(command, "/usr/bin/ls -d %s/arch/*/include/asm 2>/dev/null", 
+	sprintf(command, "/system/bin/ls -d %s/arch/*/include/asm 2>/dev/null",
 		kt->source_tree);
 	if ((pipe = popen(command, "r"))) {
 		if (fgets(buf, BUFSIZE-1, pipe)) {
@@ -5498,7 +5498,7 @@ debug_kernel_version(char *namelist)
 	if (debug_kernel_version_string)
 		return debug_kernel_version_string;
 
-        sprintf(command, "/usr/bin/strings %s", namelist);
+        sprintf(command, "/system/bin/strings %s", namelist);
 
         if ((pipe = popen(command, "r")) == NULL) { 
 		debug_kernel_version_string = " ";

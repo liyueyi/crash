@@ -15,6 +15,7 @@
  * GNU General Public License for more details.
  */
 
+typedef unsigned long ulong;
 struct mapinfo_trailer {
 	uint64_t map_start_offset;
 	uint64_t phys_base;

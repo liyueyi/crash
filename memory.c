@@ -5173,7 +5173,7 @@ PG_reserved_flag_init(void)
 	if (count_bits_long(flags) == 1)
 		vt->PG_reserved = flags;
 	else
-		vt->PG_reserved = 1 << (ffsl(flags)-1);
+		vt->PG_reserved = 1 << (__builtin_ffsl(flags)-1);
 
 	if (count == -1)
 		vt->flags |= PGCNT_ADJ;
@@ -5216,7 +5216,7 @@ PG_slab_flag_init(void)
 
 			flags = ULONG(buf + OFFSET(page_flags));
 
-			if ((bit = ffsl(flags))) {
+			if ((bit = __builtin_ffsl(flags))) {
 				vt->PG_slab = bit - 1;
 	
 				if (CRASHDEBUG(2))

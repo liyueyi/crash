@@ -354,7 +354,7 @@ dump_history(void)
  */
 
 static char *less_argv[5] = {
-	"/usr/bin/less",
+	"/system/bin/less",
 	"-E",
 	"-X",
         "-Ps -- MORE --  forward\\: <SPACE>, <ENTER> or j  backward\\: b or k  quit\\: q",
@@ -2089,8 +2089,8 @@ set_my_tty(void)
 
         strcpy(pc->my_tty, "?");
 
-	if (file_exists("/usr/bin/tty", NULL)) {
-	        sprintf(buf, "/usr/bin/tty");
+	if (file_exists("/system/bin/tty", NULL)) {
+	        sprintf(buf, "/system/bin/tty");
 	        if ((pipe = popen(buf, "r")) == NULL) 
 	                return;
 	

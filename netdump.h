@@ -17,6 +17,7 @@
  */
 
 #include <elf.h>
+#include <strings.h>
 
 #define MIN_NETDUMP_ELF32_HEADER_SIZE \
         sizeof(Elf32_Ehdr)+sizeof(Elf32_Phdr)+sizeof(Elf32_Phdr)

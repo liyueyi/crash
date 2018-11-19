@@ -19,7 +19,9 @@
  */
 
 #include "vas_crash.h"
+#include <strings.h>
 
+typedef unsigned long ulong;
 extern int vas_page_size;
 extern u_long vas_base_va;
 

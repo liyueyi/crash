@@ -17,7 +17,7 @@
 
 #include "defs.h"
 #include <ctype.h>
-
+#include <string.h>
 static void print_number(struct number_option *, int, int);
 static long alloc_hq_entry(void);
 struct hq_entry;
@@ -2063,7 +2063,7 @@ cmd_set(void)
 				switch (pc->scroll_command)
 				{
 				case SCROLL_LESS:
-					fprintf(fp, "(/usr/bin/less)\n");
+					fprintf(fp, "(/system/bin/less)\n");
 					break;
 				case SCROLL_MORE:
 					fprintf(fp, "(/bin/more)\n");
@@ -2528,7 +2528,7 @@ show_options(void)
 	switch (pc->scroll_command)
 	{
 	case SCROLL_LESS:
-		fprintf(fp, "(/usr/bin/less)\n");
+		fprintf(fp, "(/system/bin/less)\n");
 		break;
 	case SCROLL_MORE:
 		fprintf(fp, "(/bin/more)\n");
@@ -4491,7 +4491,7 @@ int do_radix_tree_traverse(ulong ptr, int is_root, struct radix_tree_ops *ops)
 			error(FATAL, "cannot determine length of "
 				     "radix_tree_node.slots[] array\n");
 		nlen /= sizeof(void *);
-		RADIX_TREE_MAP_SHIFT = ffsl(nlen) - 1;
+		RADIX_TREE_MAP_SHIFT = __builtin_ffsl(nlen) - 1;
 		RADIX_TREE_MAP_SIZE = (1UL << RADIX_TREE_MAP_SHIFT);
 		RADIX_TREE_MAP_MASK = (RADIX_TREE_MAP_SIZE-1);
 
@@ -4637,7 +4637,7 @@ do_xarray_traverse(ulong ptr, int is_root, struct xarray_ops *ops)
 		if ((nlen = MEMBER_SIZE("xa_node", "slots")) <= 0)
 			error(FATAL, "cannot determine length of xa_node.slots[] array\n");
 		nlen /= sizeof(void *);
-		XA_CHUNK_SHIFT = ffsl(nlen) - 1;
+		XA_CHUNK_SHIFT = __builtin_ffsl(nlen) - 1;
 		XA_CHUNK_SIZE = (1UL << XA_CHUNK_SHIFT);
 		XA_CHUNK_MASK = (XA_CHUNK_SIZE-1);
 	}

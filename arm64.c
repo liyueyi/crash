@@ -82,7 +82,10 @@ static int arm64_get_crash_notes(void);
 static void arm64_calc_VA_BITS(void);
 static int arm64_is_uvaddr(ulong, struct task_context *);
 
-
+int backtrace (void **__array, int __size)
+{
+	return 0;
+}
 /*
  * Do all necessary machine-specific setup here. This is called several times
  * during initialization.

@@ -3648,13 +3648,13 @@ is_compressed_kernel(char *file, char **tmp)
 	case GZIP:
 		sprintf(command, "%s -c %s > %s", 
 			file_exists("/bin/gunzip", NULL) ?
-			"/bin/gunzip" : "/usr/bin/gunzip",
+			"/bin/gunzip" : "/system/bin/gunzip",
 			file, tempname);
 		break;
 	case BZIP2:
 		sprintf(command, "%s -c %s > %s", 
 			file_exists("/bin/bunzip2", NULL) ?
-			"/bin/bunzip2" : "/usr/bin/bunzip2",
+			"/bin/bunzip2" : "/system/bin/bunzip2",
 			file, tempname);
 		break;
 	}
@@ -12999,15 +12999,15 @@ dump_trace(void **retaddr)
         }
 	fflush(stderr);
 
-	if (!file_exists("/usr/bin/nm", NULL)) {
-		fprintf(stderr, "crash: /usr/bin/nm: no such file\n");
+	if (!file_exists("/system/bin/nm", NULL)) {
+		fprintf(stderr, "crash: /system/bin/nm: no such file\n");
 		return;
 	}
 
 	if (is_binary_stripped(thisfile))
-		nm_call = "/usr/bin/nm -DSBn %s";
+		nm_call = "/system/bin/nm -DSBn %s";
 	else
-		nm_call = "/usr/bin/nm -BSn %s";
+		nm_call = "/system/bin/nm -BSn %s";
 
 	last_size = 0;
 

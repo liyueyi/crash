@@ -199,7 +199,7 @@ main(int argc, char **argv)
 
 		        else if (STREQ(long_options[option_index].name, "less")) {
 				if ((pc->scroll_command != SCROLL_NONE) &&
-				    file_exists("/usr/bin/less", NULL))
+				    file_exists("/system/bin/less", NULL))
 					pc->scroll_command = SCROLL_LESS;
 			}
 
@@ -1140,7 +1140,7 @@ setup_environment(int argc, char **argv)
 		if (CRASHPAGER_valid()) {
 			pc->flags |= SCROLL;
 			pc->scroll_command = SCROLL_CRASHPAGER;
-		} else if (file_exists("/usr/bin/less", NULL)) {
+		} else if (file_exists("/system/bin/less", NULL)) {
 			pc->flags |= SCROLL;
 			pc->scroll_command = SCROLL_LESS;
 		} else if (file_exists("/bin/more", NULL)) {

@@ -18,6 +18,8 @@
 
 #ifndef GDB_COMMON
 
+typedef unsigned long ulong;
+typedef unsigned short ushort;
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdint.h>
@@ -25,6 +27,7 @@
 #include <unistd.h>
 #include <sys/mman.h>
 #include <setjmp.h>
+#include <sys/endian.h>
 #undef basename
 #if !defined(__USE_GNU)
 #define __USE_GNU
@@ -46,7 +49,7 @@
 #include <sys/param.h>
 #include <sys/wait.h>
 #include <sys/time.h>
-#include <execinfo.h> /* backtrace() */
+//#include <execinfo.h> /* backtrace() */
 #include <regex.h>
 #ifdef LZO
 #include <lzo/lzo1x.h>
