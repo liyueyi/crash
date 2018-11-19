@@ -1,8 +1,8 @@
 /* cmdline.c - core analysis suite
  *
  * Copyright (C) 1999, 2000, 2001, 2002 Mission Critical Linux, Inc.
- * Copyright (C) 2002-2015,2017 David Anderson
- * Copyright (C) 2002-2015,2017 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2002-2015,2018 David Anderson
+ * Copyright (C) 2002-2015,2018 Red Hat, Inc. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -806,7 +806,7 @@ output_command_to_pids(void)
         char buf1[BUFSIZE];
         char buf2[BUFSIZE];
         char lookfor[BUFSIZE+2];
-        char *pid, *name, *status, *p_pid, *pgrp;
+        char *pid, *name, *status, *p_pid, *pgrp, *comm;
 	char *arglist[MAXARGS];
 	int argc;
 	FILE *pipe;
@@ -815,7 +815,8 @@ output_command_to_pids(void)
 	retries = 0;
 	shell_has_exited = FALSE;
 	pc->pipe_pid = pc->pipe_shell_pid = 0;
-        sprintf(lookfor, "(%s)", pc->pipe_command);
+	comm = strrchr(pc->pipe_command, '/');
+	sprintf(lookfor, "(%s)", comm ? ++comm : pc->pipe_command);
 	stall(1000);
 retry:
         if (is_directory("/proc") && (dirp = opendir("/proc"))) {
@@ -1318,8 +1319,10 @@ is_shell_script(char *s)
         if ((fd = open(s, O_RDONLY)) < 0) 
                 return FALSE;
         
-        if (isatty(fd)) 
+        if (isatty(fd)) {
+                close(fd);
                 return FALSE;
+	}
         
         if (read(fd, interp, 2) != 2) {
                 close(fd);
@@ -2322,6 +2325,9 @@ is_args_input_file(struct command_table_entry *ct, struct args_input_file *aif)
 	int retval;
 
 	if (pc->curcmd_flags & NO_MODIFY)
+		return FALSE;
+
+	if (STREQ(ct->name, "repeat"))
 		return FALSE;
 
 	BZERO(aif, sizeof(struct args_input_file));
